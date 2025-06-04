@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import supabase from "./db.js";
 import authRoutes from "./routes/auth.js";
+import widgetRoutes from "./routes/widgets.js";
+import paymentRoutes from "./routes/payments.js";
 
 dotenv.config();
 
@@ -10,11 +12,18 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:5173"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/widgets", widgetRoutes);
+app.use("/api/payments", paymentRoutes);
 
 // Test route
 app.get("/api/health", (req, res) => {
@@ -24,28 +33,7 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Test database connection
-app.get("/api/test-db", async (req, res) => {
-  try {
-    const { data, error } = await supabase
-      .from("owners")
-      .select("count")
-      .limit(1);
-
-    if (error) throw error;
-
-    res.json({
-      message: "Database connected successfully",
-      data,
-    });
-  } catch (error) {
-    res.status(500).json({
-      error: "Database connection failed",
-      details: error.message,
-    });
-  }
-});
-
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  console.log("Environment:", process.env.NODE_ENV || "development");
 });
