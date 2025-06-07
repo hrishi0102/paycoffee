@@ -3,6 +3,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import supabase from "../db.js";
 import { authenticateToken } from "../middleware/auth.js";
+import { PaymanClient } from "@paymanai/payman-ts";
+import dotenv from "dotenv";
+dotenv.config();
 
 const router = express.Router();
 
@@ -127,6 +130,50 @@ router.post("/login", async (req, res) => {
     console.error("Login error:", error);
     res.status(500).json({
       error: "Login failed",
+    });
+  }
+});
+
+// Payman OAuth token exchange
+router.post("/payman/exchange", async (req, res) => {
+  try {
+    const { code } = req.body;
+    console.log("Received code:", code);
+    if (!code) {
+      return res.status(400).json({
+        success: false,
+        error: "Authorization code required",
+      });
+    }
+
+    const client = PaymanClient.withAuthCode(
+      {
+        clientId: process.env.PAYMAN_CLIENT_ID,
+        clientSecret: process.env.PAYMAN_CLIENT_SECRET,
+      },
+      code
+    );
+    // Wait for client initialization
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const tokenResponse = await client.getAccessToken();
+    console.log("Token response:", tokenResponse);
+    if (!tokenResponse?.accessToken) {
+      return res.status(500).json({
+        success: false,
+        error: "Invalid token response from Payman",
+      });
+    }
+
+    res.json({
+      success: true,
+      accessToken: tokenResponse.accessToken,
+      expiresIn: tokenResponse.expiresIn,
+    });
+  } catch (error) {
+    console.error("Payman token exchange failed:", error);
+    res.status(500).json({
+      success: false,
+      error: "Token exchange failed",
     });
   }
 });
