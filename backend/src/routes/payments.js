@@ -32,7 +32,7 @@ router.post("/:widgetId", async (req, res) => {
       )
       .eq("id", req.params.widgetId)
       .single();
-
+    console.log("Widget found ");
     if (widgetError || !widget) {
       return res.status(404).json({
         error: "Widget not found",
@@ -47,16 +47,19 @@ router.post("/:widgetId", async (req, res) => {
         expiresIn: 3600,
       }
     );
+    console.log("Payman client initialized");
 
     // Create payee for widget owner (if not exists)
     const createPayeeResponse = await supporterClient.ask(
-      `Create a payee for paytag ${widget.owners.payman_paytag} named ${widget.owners.display_name}`
+      `Create a crypto payee for address ${widget.owners.payman_paytag} named ${widget.owners.display_name}`
     );
+    console.log("Payee created");
 
     // Send payment
     const paymentResponse = await supporterClient.ask(
-      `Send ${amount} TSD to ${widget.owners.display_name}`
+      `Send ${amount} USDC to payee named ${widget.owners.display_name}`
     );
+    console.log("Payment sent");
 
     // Record transaction
     const { data: transaction, error: transactionError } = await supabase
@@ -72,7 +75,7 @@ router.post("/:widgetId", async (req, res) => {
       })
       .select()
       .single();
-
+    console.log("Transaction recorded");
     if (transactionError) {
       console.error("Transaction recording error:", transactionError);
     }
