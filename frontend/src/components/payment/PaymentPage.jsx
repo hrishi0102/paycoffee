@@ -30,7 +30,7 @@ export default function PaymentPage() {
   const [paymanToken, setPaymanToken] = useState(null);
 
   // OAuth configuration - matching your working example exactly
-  const CLIENT_ID = "pm-test-aaQzmXN2gToNlG-ukKQIJm_N";
+  const CLIENT_ID = "pm-live-ULVOGuue4ZbSL1340onaMk-o";
   const SCOPES = "read_balance,write_create_payee,write_send_payment";
   const REDIRECT_URI = "http://localhost:5173"; // Base domain only, like your example
 
