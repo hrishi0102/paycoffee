@@ -16,7 +16,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { Copy, Trash2, Code, DollarSign } from "lucide-react";
+import {
+  Copy,
+  Trash2,
+  Code,
+  DollarSign,
+  CheckCircle,
+  ExternalLink,
+} from "lucide-react";
 import { useWidgets } from "../../hooks/useWidgets";
 
 export default function WidgetCard({ widget }) {
@@ -24,6 +31,7 @@ export default function WidgetCard({ widget }) {
   const [embedCode, setEmbedCode] = useState("");
   const [isLoadingEmbed, setIsLoadingEmbed] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const { deleteWidget, getEmbedCode } = useWidgets();
 
@@ -41,7 +49,8 @@ export default function WidgetCard({ widget }) {
 
   const handleCopyEmbedCode = () => {
     navigator.clipboard.writeText(embedCode);
-    alert("Embed code copied to clipboard!");
+    setCopySuccess(true);
+    setTimeout(() => setCopySuccess(false), 2000);
   };
 
   const handleDelete = async () => {
@@ -54,6 +63,14 @@ export default function WidgetCard({ widget }) {
       alert("Failed to delete widget");
     }
     setIsDeleting(false);
+  };
+
+  const getPaymentUrl = () => {
+    const baseUrl =
+      window.location.hostname === "localhost"
+        ? "http://localhost:5173"
+        : "https://paycoffee.vercel.app";
+    return `${baseUrl}/pay/${widget.id}`;
   };
 
   return (
@@ -80,34 +97,97 @@ export default function WidgetCard({ widget }) {
                   Embed
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+              <DialogContent className="max-w-2xl">
                 <DialogHeader>
-                  <DialogTitle>Embed Code</DialogTitle>
+                  <DialogTitle>Embed Your Payment Widget</DialogTitle>
                   <DialogDescription>
-                    Copy this code and paste it into your website where you want
-                    the payment buttons to appear
+                    Add this single line of code anywhere in your website to
+                    show the payment widget
                   </DialogDescription>
                 </DialogHeader>
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {isLoadingEmbed ? (
                     <div className="text-center py-8">
                       Loading embed code...
                     </div>
                   ) : (
                     <>
-                      <div className="bg-gray-50 p-4 rounded-lg border max-h-96 overflow-y-auto">
-                        <pre className="text-xs font-mono whitespace-pre-wrap break-words">
-                          {embedCode}
-                        </pre>
+                      {/* Instructions */}
+                      <div className="space-y-3">
+                        <h3 className="font-medium text-sm">How to use:</h3>
+                        <ol className="list-decimal list-inside space-y-2 text-sm text-gray-600">
+                          <li>Copy the embed code below</li>
+                          <li>
+                            Paste it anywhere in your website's HTML (preferably
+                            before the closing &lt;/body&gt; tag)
+                          </li>
+                          <li>
+                            The widget will automatically appear in the
+                            bottom-right corner
+                          </li>
+                        </ol>
                       </div>
-                      <div className="flex space-x-2">
-                        <Button
-                          onClick={handleCopyEmbedCode}
-                          className="flex-1"
+
+                      {/* Embed Code */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">
+                          Embed Code:
+                        </label>
+                        <div className="bg-gray-50 p-4 rounded-lg border relative">
+                          <pre className="text-xs font-mono whitespace-pre-wrap break-all">
+                            {embedCode}
+                          </pre>
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            onClick={handleCopyEmbedCode}
+                            className="absolute top-2 right-2"
+                          >
+                            {copySuccess ? (
+                              <>
+                                <CheckCircle className="h-3 w-3 mr-1" />
+                                Copied!
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="h-3 w-3 mr-1" />
+                                Copy
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* Preview */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Preview:</label>
+                        <div className="bg-gray-50 p-4 rounded-lg border">
+                          <p className="text-sm text-gray-600 mb-3">
+                            The widget will appear as a floating button in the
+                            bottom-right corner of your website.
+                          </p>
+                          <div className="relative h-40 bg-white rounded border">
+                            <div
+                              className="absolute bottom-4 right-4 w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg"
+                              style={{ backgroundColor: widget.primary_color }}
+                            >
+                              ☕
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Test Link */}
+                      <div className="flex items-center justify-between pt-4 border-t">
+                        <a
+                          href={getPaymentUrl()}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-blue-600 hover:underline flex items-center"
                         >
-                          <Copy className="h-4 w-4 mr-2" />
-                          Copy Embed Code
-                        </Button>
+                          <ExternalLink className="h-3 w-3 mr-1" />
+                          Test payment page
+                        </a>
                         <Button
                           variant="outline"
                           onClick={() => setShowEmbedDialog(false)}
