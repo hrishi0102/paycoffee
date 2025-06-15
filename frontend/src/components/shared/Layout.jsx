@@ -7,6 +7,11 @@ export default function Layout({ children }) {
   const { user, logout } = useAuth();
   const location = useLocation();
 
+  const handleLogout = () => {
+    logout();
+    window.location.href = "/";
+  };
+
   const navigation = [
     { name: "Dashboard", href: "/dashboard", icon: Coffee },
     { name: "Create Widget", href: "/create-widget", icon: Plus },
@@ -29,7 +34,7 @@ export default function Layout({ children }) {
             <Button
               variant="ghost"
               size="sm"
-              onClick={logout}
+              onClick={handleLogout}
               className="flex items-center space-x-2"
             >
               <LogOut className="h-4 w-4" />

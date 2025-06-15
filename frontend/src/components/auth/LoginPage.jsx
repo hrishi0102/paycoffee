@@ -29,7 +29,7 @@ export default function LoginPage() {
     try {
       const result = await login(email, password);
       if (result.success) {
-        navigate("/dashboard");
+        window.location.href = "/dashboard";
       } else {
         setError(result.error);
       }
