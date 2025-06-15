@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/:widgetId", async (req, res) => {
   try {
     const { amount, supporterToken, supporterName, message } = req.body;
-
+    console.log("Payment request received:", req.body);
     if (!amount || amount <= 0) {
       return res.status(400).json({
         error: "Valid amount is required",
@@ -51,15 +51,22 @@ router.post("/:widgetId", async (req, res) => {
 
     // Create payee for widget owner (if not exists)
     const createPayeeResponse = await supporterClient.ask(
-      `Create a crypto payee for address ${widget.owners.payman_paytag} named ${widget.owners.display_name}`
+      `Create a BASE crypto payee for address ${widget.owners.payman_paytag} named ${widget.owners.display_name}`
     );
     console.log("Payee created");
+    console.log("Payee response:", createPayeeResponse);
+
+    const createWalletResponse = await supporterClient.ask(
+      `List all my wallets`
+    );
+    console.log("Wallet response:", createWalletResponse);
 
     // Send payment
     const paymentResponse = await supporterClient.ask(
-      `Send ${amount} USDC to payee named ${widget.owners.display_name}`
+      `Send ${amount} BASE USDC to payee named ${widget.owners.display_name} from fast.butter.delta/29 usdc Wallet.`
     );
     console.log("Payment sent");
+    console.log("Payment response:", paymentResponse);
 
     // Record transaction
     const { data: transaction, error: transactionError } = await supabase
@@ -76,6 +83,7 @@ router.post("/:widgetId", async (req, res) => {
       .select()
       .single();
     console.log("Transaction recorded");
+    console.log("Transaction response:", transaction);
     if (transactionError) {
       console.error("Transaction recording error:", transactionError);
     }
