@@ -42,7 +42,9 @@ export default function PaymentPage() {
 
   const fetchWidget = async () => {
     try {
-      const response = await fetch(`/api/widgets/${widgetId}/public`);
+      const response = await fetch(
+        `${API_BASE_URL}/api/widgets/${widgetId}/public`
+      );
       const data = await response.json();
 
       if (data.success) {
@@ -97,7 +99,7 @@ export default function PaymentPage() {
     try {
       console.log("🔄 Exchanging code for token...");
 
-      const response = await fetch("/api/auth/payman/exchange", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/payman/exchange`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code }),
@@ -195,7 +197,7 @@ export default function PaymentPage() {
 
     try {
       console.log("🔄 Processing payment...");
-      const response = await fetch(`/api/payments/${widgetId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/payments/${widgetId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

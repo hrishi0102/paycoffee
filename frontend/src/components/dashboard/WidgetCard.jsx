@@ -66,10 +66,9 @@ export default function WidgetCard({ widget }) {
   };
 
   const getPaymentUrl = () => {
-    const baseUrl =
-      window.location.hostname === "localhost"
-        ? "http://localhost:5173"
-        : "https://paycoffee.vercel.app";
+    const baseUrl = import.meta.env.PROD
+      ? "https://paycoffee.vercel.app"
+      : "http://localhost:5173";
     return `${baseUrl}/pay/${widget.id}`;
   };
 

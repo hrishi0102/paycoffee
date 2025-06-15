@@ -16,7 +16,7 @@ export const useAuth = () => {
         return;
       }
 
-      const response = await fetch("/api/auth/me", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -37,7 +37,7 @@ export const useAuth = () => {
   };
 
   const login = async (email, password) => {
-    const response = await fetch("/api/auth/login", {
+    const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export const useAuth = () => {
   };
 
   const signup = async (email, password, displayName, paymanPaytag) => {
-    const response = await fetch("/api/auth/signup", {
+    const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

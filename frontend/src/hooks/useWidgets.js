@@ -10,7 +10,7 @@ export const useWidgets = () => {
       setIsLoading(true);
       const token = localStorage.getItem("paycoffee_token");
 
-      const response = await fetch("/api/widgets", {
+      const response = await fetch(`${API_BASE_URL}/api/widgets`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -35,7 +35,7 @@ export const useWidgets = () => {
     try {
       const token = localStorage.getItem("paycoffee_token");
 
-      const response = await fetch("/api/widgets", {
+      const response = await fetch(`${API_BASE_URL}/api/widgets`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +61,7 @@ export const useWidgets = () => {
     try {
       const token = localStorage.getItem("paycoffee_token");
 
-      const response = await fetch(`/api/widgets/${widgetId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/widgets/${widgetId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -85,11 +85,14 @@ export const useWidgets = () => {
     try {
       const token = localStorage.getItem("paycoffee_token");
 
-      const response = await fetch(`/api/widgets/${widgetId}/embed`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/api/widgets/${widgetId}/embed`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await response.json();
 
