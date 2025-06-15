@@ -34,7 +34,7 @@ router.get("/widget.js", async (req, res) => {
 
   const apiUrl =
     process.env.NODE_ENV === "production"
-      ? "https://paycoffee-api.vercel.app" // Update this with your actual API URL
+      ? "https://paycoffee.onrender.com" // Update this with your actual API URL
       : "http://localhost:3001";
 
   // Generate the widget loader script

@@ -231,7 +231,7 @@ router.get("/:id/embed", authenticateToken, async (req, res) => {
 
     const baseUrl =
       process.env.NODE_ENV === "production"
-        ? "https://paycoffee-api.vercel.app" // Update this with your actual API URL
+        ? "https://paycoffee.onrender.com" // Update this with your actual API URL
         : "http://localhost:3001";
 
     // Simple one-line embed code like Chatbase
