@@ -30,8 +30,9 @@ export default function PaymentPage() {
   const [paymanToken, setPaymanToken] = useState(null);
 
   // OAuth configuration - matching your working example exactly
-  const CLIENT_ID = "pm-live-ULVOGuue4ZbSL1340onaMk-o";
-  const SCOPES = "read_balance,write_create_payee,write_send_payment";
+  const CLIENT_ID = "pm-test-pz5Fd5x6AfdmJuvX_vlZ6pzJ";
+  const SCOPES =
+    "read_balance,read_list_wallets,read_list_payees,read_list_transactions,write_create_payee,write_send_payment,write_create_wallet";
   const REDIRECT_URI = "http://localhost:5173"; // Base domain only, like your example
 
   useEffect(() => {

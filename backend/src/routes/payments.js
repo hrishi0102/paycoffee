@@ -50,20 +50,26 @@ router.post("/:widgetId", async (req, res) => {
     console.log("Payman client initialized");
 
     // Create payee for widget owner (if not exists)
+    // const createPayeeResponse = await supporterClient.ask(
+    //   `Create a BASE crypto payee for address ${widget.owners.payman_paytag} named ${widget.owners.display_name}`
+    // );
     const createPayeeResponse = await supporterClient.ask(
-      `Create a BASE crypto payee for address ${widget.owners.payman_paytag} named ${widget.owners.display_name}`
+      `Create a test payee named ${widget.owners.display_name}`
     );
     console.log("Payee created");
     console.log("Payee response:", createPayeeResponse);
 
-    const createWalletResponse = await supporterClient.ask(
-      `List all my wallets`
-    );
-    console.log("Wallet response:", createWalletResponse);
+    // const createWalletResponse = await supporterClient.ask(
+    //   `List all my wallets`
+    // );
+    // console.log("Wallet response:", createWalletResponse);
 
     // Send payment
+    // const paymentResponse = await supporterClient.ask(
+    //   `Send ${amount} BASE USDC to payee named ${widget.owners.display_name} from fast.butter.delta/29 usdc Wallet.`
+    // );
     const paymentResponse = await supporterClient.ask(
-      `Send ${amount} BASE USDC to payee named ${widget.owners.display_name} from fast.butter.delta/29 usdc Wallet.`
+      `Send ${amount} TSD to payee named ${widget.owners.display_name} from TSD Wallet 1`
     );
     console.log("Payment sent");
     console.log("Payment response:", paymentResponse);
