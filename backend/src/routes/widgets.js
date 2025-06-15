@@ -231,54 +231,11 @@ router.get("/:id/embed", authenticateToken, async (req, res) => {
 
     const baseUrl =
       process.env.NODE_ENV === "production"
-        ? "https://paycoffee.com"
-        : "http://localhost:3000";
+        ? "https://paycoffee-api.vercel.app" // Update this with your actual API URL
+        : "http://localhost:3001";
 
-    const embedCode = `<div id="paycoffee-${widget.id}"></div>
-<script>
-(function() {
-  const amounts = ${JSON.stringify(widget.default_amounts)};
-  const container = document.getElementById('paycoffee-${widget.id}');
-  
-  amounts.forEach(amount => {
-    const btn = document.createElement('button');
-    btn.innerHTML = '☕ ${widget.button_text} ($' + amount + ')';
-    btn.onclick = () => window.open('${baseUrl}/pay/${
-      widget.id
-    }?amount=' + amount, '_blank');
-    btn.style.cssText = 'background: ${
-      widget.primary_color
-    }; color: white; border: none; padding: 12px 24px; margin: 5px; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: system-ui;';
-    container.appendChild(btn);
-  });
-  
-  ${
-    widget.allow_custom_amount
-      ? `
-  const customDiv = document.createElement('div');
-  customDiv.style.cssText = 'margin-top: 10px;';
-  
-  const input = document.createElement('input');
-  input.type = 'number';
-  input.placeholder = 'Custom amount';
-  input.style.cssText = 'padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin-right: 5px;';
-  
-  const customBtn = document.createElement('button');
-  customBtn.innerHTML = 'Send';
-  customBtn.onclick = () => {
-    if (input.value && input.value > 0) {
-      window.open('${baseUrl}/pay/${widget.id}?amount=' + input.value, '_blank');
-    }
-  };
-  customBtn.style.cssText = 'background: ${widget.primary_color}; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: 600;';
-  
-  customDiv.appendChild(input);
-  customDiv.appendChild(customBtn);
-  container.appendChild(customDiv);`
-      : ""
-  }
-})();
-</script>`;
+    // Simple one-line embed code like Chatbase
+    const embedCode = `<script src="${baseUrl}/api/embed/widget.js?id=${widget.id}" defer></script>`;
 
     res.json({
       success: true,
