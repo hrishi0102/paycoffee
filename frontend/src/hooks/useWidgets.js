@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { API_BASE_URL } from "../config/api";
 export const useWidgets = () => {
   const [widgets, setWidgets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

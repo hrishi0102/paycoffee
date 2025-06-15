@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Coffee, ArrowLeft, Loader2 } from "lucide-react";
+import { API_BASE_URL } from "../../config/api";
 
 export default function PaymentPage() {
   const { widgetId } = useParams();
