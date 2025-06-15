@@ -32,7 +32,7 @@ export default function PaymentPage() {
   // OAuth configuration - matching your working example exactly
   const CLIENT_ID = "pm-test-pz5Fd5x6AfdmJuvX_vlZ6pzJ";
   const SCOPES =
-    "read_balance,read_list_wallets,read_list_payees,read_list_transactions,write_create_payee,write_send_payment,write_create_wallet";
+    "read_balance,read_list_payees,read_list_transactions,write_create_payee";
   const REDIRECT_URI = "http://localhost:5173"; // Base domain only, like your example
 
   useEffect(() => {

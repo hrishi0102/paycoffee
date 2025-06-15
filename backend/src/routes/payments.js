@@ -69,7 +69,7 @@ router.post("/:widgetId", async (req, res) => {
     //   `Send ${amount} BASE USDC to payee named ${widget.owners.display_name} from fast.butter.delta/29 usdc Wallet.`
     // );
     const paymentResponse = await supporterClient.ask(
-      `Send ${amount} TSD to payee named ${widget.owners.display_name} from TSD Wallet 1`
+      `Send ${amount} TSD to payee ${widget.owners.display_name} from TSD Wallet 1`
     );
     console.log("Payment sent");
     console.log("Payment response:", paymentResponse);
