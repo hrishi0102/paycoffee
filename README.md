@@ -6,6 +6,11 @@ PayCoffee is a modern payment widget platform that enables creators, developers,
 
 ![PayCoffee](frontend/src/assets/paycoffee.png)
 
+### Mock Credentials
+
+- **user-email**: companyA@example.com
+- **user-password**: password
+
 ## 🌟 Features
 
 ### ✨ Easy Payment Widgets
