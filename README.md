@@ -44,7 +44,7 @@ PayCoffee is a modern payment widget platform that enables creators, developers,
 ### For Widget Creators
 
 1. **Sign Up**: Create your PayCoffee account at [paycoffee.vercel.app](https://paycoffee.vercel.app)
-2. **Connect Payman**: Link your Payman paytag to receive payments
+2. **Connect Payman**: Link your crypto wallet to receive payments
 3. **Create Widget**: Configure your payment widget with custom amounts and styling
 4. **Embed**: Copy the one-line embed code and paste it into your website
 5. **Start Earning**: Begin accepting payments from your supporters immediately

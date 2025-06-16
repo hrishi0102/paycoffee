@@ -164,7 +164,7 @@ export default function LandingPage() {
                   Instant Setup
                 </h3>
                 <p className="text-amber-800/80 leading-relaxed">
-                  Get started in minutes with just your Payman paytag
+                  Get started in minutes with just your Payman wallet
                 </p>
               </div>
             </div>

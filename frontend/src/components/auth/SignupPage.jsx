@@ -107,17 +107,20 @@ export default function SignupPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="paymanPaytag">Payman Paytag</Label>
+              <Label htmlFor="paymanPaytag">
+                Crypto Wallet Address (Optional)
+              </Label>
               <Input
                 id="paymanPaytag"
                 name="paymanPaytag"
                 value={formData.paymanPaytag}
                 onChange={handleChange}
                 required
-                placeholder="your.wallet.address/123"
+                placeholder="0xabc..."
               />
               <p className="text-xs text-gray-500">
-                Your Payman wallet paytag where you'll receive payments
+                Your crypto wallet address where you'll receive payments (coming
+                soon)
               </p>
             </div>
 
